@@ -1,0 +1,27 @@
+group = "${artifact_group}"
+version = "${artifact_version}"
+
+apply plugin: 'groovy'
+apply plugin: 'maven'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	compile gradleApi()
+}
+
+uploadArchives {
+	repositories {
+		mavenDeployer {
+			repository(url: "${nexusUrl}/maven-releases/") {
+				authentication(userName: nexusUsername, password: nexusPassword)
+			}
+
+			snapshotRepository(url: "${nexusUrl}/maven-snapshots/") {
+				authentication(userName: nexusUsername, password: nexusPassword)
+			}
+		}
+	}
+}
