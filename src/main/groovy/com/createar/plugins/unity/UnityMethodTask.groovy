@@ -51,6 +51,13 @@ public class UnityMethodTask extends Exec {
     String projectPath
 
     /**
+     * If set to noquit, will not use the -quit parameter.
+     */
+    @Input
+    @Optional
+    String quitMode
+
+    /**
      * Path to log file.
      */
     @Input
@@ -125,7 +132,14 @@ public class UnityMethodTask extends Exec {
      * @param      customArgs  The custom arguments list to add to.
      */
     private void addDefaultArgs(List<String> customArgs) {
-        customArgs.add('-quit')
+        if (quitMode != 'noquit') {
+            println "Using quit."
+
+            customArgs.add('-quit')
+        } else {
+            println "No quit."
+        }
+        
         customArgs.add('-batchmode')
         customArgs.add('-nographics')
 
